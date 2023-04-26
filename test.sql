@@ -36,3 +36,8 @@ CREATE TABLE t4 (
   , i integer not null
   , PRIMARY KEY(id, i)
 );
+
+CREATE TABLE t5 (
+  id bigserial primary key
+  , "group" text not null
+)

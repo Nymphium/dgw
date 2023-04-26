@@ -176,6 +176,10 @@ type StructField struct {
 	Column *PgColumn
 }
 
+func escapeKeyword(s string) string {
+	return fmt.Sprintf("\"%s\"", s)
+}
+
 // PgLoadTypeMapFromFile load type map from toml file
 func PgLoadTypeMapFromFile(filePath string) (*PgTypeMapConfig, error) {
 	var conf PgTypeMapConfig
@@ -213,6 +217,9 @@ func PgLoadColumnDef(db Queryer, schema string, table string) ([]*PgColumn, erro
 		if i := strings.Index(c.DataType, "("); i > 0 {
 			c.DataType = c.DataType[0:i]
 		}
+
+		// escape keyword of Name anyway
+		c.Name = escapeKeyword(c.Name)
 
 		cols = append(cols, c)
 	}
